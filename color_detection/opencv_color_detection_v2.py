@@ -46,13 +46,13 @@ def main():
 
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
-        print("Kamera konnte nicht geöffnet werden.")
+        print("Camera can't be opened.")
         return
 
     while True:
         ret, frame = cap.read()
         if not ret:
-            print("Kein Frame von der Kamera.")
+            print("No frame from the camera.")
             break
 
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -70,9 +70,9 @@ def main():
         if bbox:
             x1, y1, x2, y2 = bbox
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)
-            print(f"Objekt erkannt bei: x1={x1}, y1={y1}, x2={x2}, y2={y2}")
+            print(f"Object found at: x1={x1}, y1={y1}, x2={x2}, y2={y2}")
         else:
-            print("Kein Objekt erkannt")
+            print("No object found")
 
         cv2.imshow('frame', frame)
 
