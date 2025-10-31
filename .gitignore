@@ -5,3 +5,4 @@ __pycache__/
 .venv/
 clf-data/
 *.p0
+.DS_Store
