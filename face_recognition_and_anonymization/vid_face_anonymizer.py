@@ -41,12 +41,12 @@ mp_face_detection = mp.solutions.face_detection
 with (mp_face_detection.FaceDetection(model_selection = 0, min_detection_confidence = 0.5) as face_detection):
     op_mode = False
 
-    cap = cv2.VideoCapture(0)
-    ret, frame = cap.read()
+    cap = cv2.VideoCapture(0) # default webcam is usually 0
+    ret, frame = cap.read() # load first frame
 
     while ret:
-        frame = image_process(frame, face_detection, op_mode)
-        cv2.imshow('frame', frame)
+        frame = image_process(frame, face_detection, op_mode) # process each frame
+        cv2.imshow('frame', frame) # display the processed frame
 
         ret, frame = cap.read()
 
@@ -56,5 +56,5 @@ with (mp_face_detection.FaceDetection(model_selection = 0, min_detection_confide
         elif key == ord('m'): # m -> change mode (detect / anonymize)
             op_mode = not op_mode
 
-    cap.release()
-    cv2.destroyAllWindows()
+    cap.release() # release memory
+    cv2.destroyAllWindows() # close all windows

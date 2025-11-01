@@ -36,7 +36,7 @@ mp_face_detection = mp.solutions.face_detection
 
 with mp_face_detection.FaceDetection(model_selection = 0, min_detection_confidence = 0.5) as face_detection:
 
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0) # default webcam is usually 0
     ret, frame = cap.read()
 
     while ret:
@@ -49,6 +49,5 @@ with mp_face_detection.FaceDetection(model_selection = 0, min_detection_confiden
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-        # release memory and close windows
-    cap.release()
-    cv2.destroyAllWindows()
+    cap.release() # release memory
+    cv2.destroyAllWindows() # close windows
