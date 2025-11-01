@@ -12,11 +12,8 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
 
 # Set dir where image data is stored
-# data_dir = '/Users/damianhuckele/Developer/Python/ComputerVision/clf-data'
-# categories = ['empty', 'not_empty']
-
-data_dir = kagglehub.dataset_download("dansbecker/hot-dog-not-hot-dog")
-categories = ['hot_dog', 'not_hot_dog']
+data_dir = '/Users/damianhuckele/Developer/Python/ComputerVision/clf-data'
+categories = ['empty', 'not_empty']
 
 data = []
 labels = []
