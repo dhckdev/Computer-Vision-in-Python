@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 import argparse
 
-def image_process(img, face_recognition):
+def image_process(img, face_detection):
     H, W, _ = img.shape
 
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
