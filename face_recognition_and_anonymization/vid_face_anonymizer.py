@@ -50,7 +50,6 @@ with mp_face_detection.FaceDetection(model_selection = 0, min_detection_confiden
         while ret:
             frame = image_process(frame, face_detection)
             cv2.imshow('frame', frame)
-            cv2.waitKey(25)
 
             ret, frame = cap.read()
 
