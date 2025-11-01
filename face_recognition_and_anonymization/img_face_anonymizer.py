@@ -21,13 +21,15 @@ def image_process(img, face_detection):
 
             img[y1:y1 + h, x1:x1 + w, :] = cv2.blur(img[y1:y1 + h, x1:x1 + w, :], (50, 50))
             cv2.rectangle(img, (x1, y1), (x1 + w, y1 + h), (0, 255, 0), 2)
+    else:
+        print("No face found.")
 
     return img
 
 # create arguments for mode and file location
 args = argparse.ArgumentParser()
-args.add_argument('--mode', default='webcam')
-args.add_argument('--filePath', default=None)
+args.add_argument('--mode', default='image')
+args.add_argument('--filePath', default='test.JPG')
 args = args.parse_args()
 
 # detect faces in image
@@ -42,21 +44,3 @@ with mp_face_detection.FaceDetection(model_selection = 0, min_detection_confiden
 
         cv2.imshow('img', img)
         cv2.waitKey(0)
-
-    elif args.mode in ['webcam']:
-        cap = cv2.VideoCapture(0)
-        ret, frame = cap.read()
-
-        while ret:
-            frame = image_process(frame, face_detection)
-            cv2.imshow('frame', frame)
-            cv2.waitKey(10)
-            ret, frame = cap.read()
-
-            # listen for key interrupt
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
-        # release memory and close windows
-        cap.release()
-        cv2.destroyAllWindows()

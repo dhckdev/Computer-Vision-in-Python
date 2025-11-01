@@ -6,3 +6,5 @@ __pycache__/
 clf-data/
 *.p0
 .DS_Store
+*.png
+*.jpg

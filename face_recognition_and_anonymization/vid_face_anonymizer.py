@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 import argparse
 
-def image_process(img, face_detection):
+def image_process(img, face_detection, op_mode):
     H, W, _ = img.shape
 
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -19,8 +19,13 @@ def image_process(img, face_detection):
             w = int(w * W)
             h = int(h * H)
 
-            img[y1:y1 + h, x1:x1 + w, :] = cv2.blur(img[y1:y1 + h, x1:x1 + w, :], (50, 50))
-            cv2.rectangle(img, (x1, y1), (x1 + w, y1 + h), (0, 255, 0), 2)
+            if op_mode == True:
+                img[y1:y1 + h, x1:x1 + w, :] = cv2.blur(img[y1:y1 + h, x1:x1 + w, :], (50, 50))
+                cv2.rectangle(img, (x1, y1), (x1 + w, y1 + h), (0, 0, 255), 4)
+            else:
+                cv2.rectangle(img, (x1, y1), (x1 + w, y1 + h), (0, 255, 0), 4)
+    else:
+        print("No face found.")
 
     return img
 
@@ -33,28 +38,23 @@ args = args.parse_args()
 # detect faces in image
 mp_face_detection = mp.solutions.face_detection
 
-with mp_face_detection.FaceDetection(model_selection = 0, min_detection_confidence = 0.5) as face_detection:
+with (mp_face_detection.FaceDetection(model_selection = 0, min_detection_confidence = 0.5) as face_detection):
+    op_mode = False
 
-    if args.mode in ['image']:
-        img = cv2.imread(args.filePath)
-        H, W, _ = img.shape
-        img = image_process(img, face_detection)
+    cap = cv2.VideoCapture(0)
+    ret, frame = cap.read()
 
-        cv2.imshow('img', img)
-        cv2.waitKey(0)
+    while ret:
+        frame = image_process(frame, face_detection, op_mode)
+        cv2.imshow('frame', frame)
 
-    elif args.mode in ['webcam']:
-        cap = cv2.VideoCapture(0)
         ret, frame = cap.read()
 
-        while ret:
-            frame = image_process(frame, face_detection)
-            cv2.imshow('frame', frame)
+        key = cv2.waitKey(1) & 0xFF  # listen for keyboard input
+        if key == ord('q'): # q -> quit
+            break
+        elif key == ord('m'): # m -> change mode (detect / anonymize)
+            op_mode = not op_mode
 
-            ret, frame = cap.read()
-
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
-        cap.release()
-        cv2.destroyAllWindows()
+    cap.release()
+    cv2.destroyAllWindows()

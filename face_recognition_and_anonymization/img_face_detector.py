@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 
 # import image data
-path = '/Users/damianhuckele/Developer/Python/ComputerVision/face_recognition_and_anonymization/img.jpg'
+path = 'test.JPG'
 img = cv2.imread(path)
 
 H, W, _ = img.shape
